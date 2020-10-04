@@ -59,11 +59,14 @@ get_destination_port <- function(ship_id) {
 
 get_distance_by_id <- function(ship_id) { 
   assertthat::is.number(as.numeric(ship_id))  
-  data <- SHIPS_DATA %>% 
-    filter(SHIP_ID == ship_id)
-  distance <- data$position
-  distance <- round(as.numeric(strsplit(as.character(distance), ' ')[[1]][5]), 2)
-  return(distance)
+  if (ship_id != 'NULL') {
+    data <- SHIPS_DATA %>% 
+      filter(SHIP_ID == ship_id)
+    distance <- data$position
+    distance <- round(as.numeric(strsplit(as.character(distance), ' ')[[1]][5]), 2)
+    return(distance)
+  }
+  return('')
   }
 
 

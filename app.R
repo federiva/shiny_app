@@ -17,7 +17,6 @@ ui <- semanticPage(
                                                   ),
                                     rows_height = c("50px", "100px", "100px", 'auto'), 
                                     cols_width = c("auto", "auto", "auto"))), 
-       container_style = "border: 1px solid #f00; padding:10px", 
        area_styles = list(header = "background: #0099f9; padding: 10px",
                           dropdown = "margin-left: 15px; margin-top: 20px; width:50%;",
                           distance_traveled = 'border:solid; border-color:gray; width=50%; text-align:center;'
