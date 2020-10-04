@@ -1,9 +1,10 @@
 library(dplyr)
 library(ISOcodes)
 library(stringr)
+library(leaflet)
 
 read_dataset <- function() { 
-  return(read.csv("ships_dataset.csv"))
+  return(read.csv("./data/ships_dataset.csv"))
   }
 
 SHIPS_DATA <- read_dataset()
@@ -57,6 +58,7 @@ get_destination_port <- function(ship_id) {
   } 
 
 get_distance_by_id <- function(ship_id) { 
+  assertthat::is.number(as.numeric(ship_id))  
   data <- SHIPS_DATA %>% 
     filter(SHIP_ID == ship_id)
   distance <- data$position
@@ -68,7 +70,7 @@ get_distance_by_id <- function(ship_id) {
 ### Leaflet ICON
 
 shipIcon <- makeIcon(
-  "./appsilon_home_test/static/svg/coast-guard-4130567.svg",
+  "./static/svg/coast-guard-4130567.svg",
   iconWidth = 38, iconHeight = 95,
   iconAnchorX = 0, iconAnchorY = 0
 )

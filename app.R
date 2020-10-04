@@ -1,9 +1,9 @@
 library(shiny)
 library(shiny.semantic)
 library(leaflet)
-source('./appsilon_home_test/global.R')
-source('./appsilon_home_test/modules/dropdown/dropdown_ui.R')
-source('./appsilon_home_test/cards.R')
+source('./global.R')
+source('./modules/dropdown/dropdown_ui.R')
+source('./cards.R')
 
 
 
