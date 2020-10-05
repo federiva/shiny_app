@@ -32,7 +32,8 @@ ui <- semanticPage(
                        description = textOutput('country_of_origin')),
        card3= get_card(header='Additional information', 
                        meta='', 
-                       description=a(textOutput('link_marine'), )), 
+                       description='',
+                       link= htmlOutput('link_marine')), 
        distance_traveled=verbatimTextOutput('distance_traveled'),
        map=leafletOutput("ships_map")) 
   
@@ -42,7 +43,10 @@ server <- function(input, output, session) {
   values <- dropdownServer('ships_selector')
   output$distance_traveled <- renderText({sprintf('Distance traveled (meters): %s', get_distance_by_id(values$val))})
   output$country_of_origin <- renderText({get_country_name(values$val)})
-  output$link_marine <- renderText({generate_marinetraffic_link(values$val)})
+  # output$link_marine <- renderText({generate_marinetraffic_link(values$val)})
+  output$link_marine <- renderUI({a('Look for this ship', 
+                                    href=generate_marinetraffic_link(values$val),
+                                    target="_blank")})
   output$destination_port <- renderText({get_destination_port(values$val)})
   output$ships_map <- renderLeaflet({
     validate(

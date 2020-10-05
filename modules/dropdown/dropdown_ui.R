@@ -56,7 +56,6 @@ dropdownServer <- function(id) {
   moduleServer(
     id, 
     function(input, output, session) {
-      
       dat <- reactiveValues()
       observeEvent(input$ship_type, {
         validate(
@@ -71,8 +70,9 @@ dropdownServer <- function(id) {
                           choices_value = choices_value)
       })
       
-      observe({dat$val <- input$ship_name})
+      observe({dat$val <- ifelse(input$ship_name == 'NULL', NA, input$ship_name)})
       observe({
+        req(input$ship_name)
         validate(need(dat$val != 'NULL', FALSE))
         dat$locations <- get_locations_dataset(input$ship_name)
         })

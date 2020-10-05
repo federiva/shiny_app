@@ -9,8 +9,6 @@ read_dataset <- function() {
 
 SHIPS_DATA <- read_dataset()
 
-TYPES_CHOICES <- sort(unique(SHIPS_DATA$ship_type), decreasing = TRUE)
-
 
 filter_ships_by_type <- function(ship_type) { 
   return(SHIPS_DATA %>% 
@@ -19,47 +17,57 @@ filter_ships_by_type <- function(ship_type) {
            pull(SHIPNAME))
 }
 
+
 get_types_names_pairs <- function() { 
   return( SHIPS_DATA %>%
             distinct(SHIPNAME, ship_type))
 }
 
 
-flatten_datetimes_list <- function(list_in) { 
-  return(do.call("c", list_in))
-}
-
 get_country_name <- function(ship_id) { 
+  assertthat::is.number(as.numeric(ship_id))  
   country_code <- get_country_code_by_ship_id(ship_id)
+  if (country_code == 'NaN') { 
+    return('Unknown')
+  }
   country <- ISOcodes::ISO_3166_1 %>% 
     filter(Alpha_2 == country_code)
   return(country$Name)
   }
 
+
 get_country_code_by_ship_id <- function(ship_id) { 
-  country_code <- SHIPS_DATA %>% 
-                    filter(SHIP_ID == ship_id)
-  return(country_code$FLAG)
+  assertthat::is.number(as.numeric(ship_id))  
+  if (!is.na(ship_id)) {
+    country_code <- SHIPS_DATA %>% 
+                      filter(SHIP_ID == ship_id)
+    return(country_code$FLAG[1])  
+  } else { 
+    return('NaN')  
   }
+}
 
 
-generate_marinetraffic_link <- function(ship_id) { 
+generate_marinetraffic_link <- function(ship_id) {
+  assertthat::is.number(as.numeric(ship_id))  
   url <- sprintf('https://www.marinetraffic.com/en/ais/details/ships/shipid:%s', ship_id)
   return(url)
   }
 
 
 get_destination_port <- function(ship_id) { 
+  assertthat::is.number(as.numeric(ship_id))  
   data <- SHIPS_DATA %>% 
             filter(SHIP_ID == ship_id)
-  port <- data$port
+  port <- data$port[1]
   port <- str_to_title(tolower(port))
   return(port)
   } 
 
+
 get_distance_by_id <- function(ship_id) { 
   assertthat::is.number(as.numeric(ship_id))  
-  if (ship_id != 'NULL') {
+  if (!is.na(ship_id)) {
     data <- SHIPS_DATA %>% 
       filter(SHIP_ID == ship_id)
     distance <- data$position
@@ -80,5 +88,5 @@ shipIcon <- makeIcon(
 ### Assumption 1. SHIP_ID is a unique number for a unique SHIP
 ### Assumption 2. SHIP_ID is one-to-one to SHIPNAME 
 ### NOTE: SHIP_ID is not unique here because we have different names for a unique ID so for the purpose of
-  
+### the task and not knowing for sure which name is the correct for a given ID I've kept both.  
   
