@@ -5,6 +5,6 @@ account: federiva
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2941088
-bundleId: 3701590
+bundleId: 3702660
 url: https://federiva.shinyapps.io/appsilon_home_test/
-when: 1601838562.65749
+when: 1601873031.90611

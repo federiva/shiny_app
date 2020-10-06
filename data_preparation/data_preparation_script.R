@@ -5,7 +5,6 @@ source('./data_preparation_helpers.R')
 
 # Reading data
 SHIPS_DATA <- load_data_feather()
-SHIPS_DATA <- SHIPS_DATA[1:10000,]
 SHIPS_DATA <- remove_unique_observations(SHIPS_DATA)
 
 # Getting the processed dataset
@@ -32,7 +31,7 @@ ships_dataset <- SHIPS_DATA %>%
 # the information since that I don't have any criteria to know which is valid with the information and time
 # that I have
 # Write to for later use (Dataset is much smaller now, so I prefer to use a base R function to do it)
-write.csv(ships_dataset, "ships_dataset.csv")
+write.csv(ships_dataset, "../data/ships_dataset.csv")
 
 
 

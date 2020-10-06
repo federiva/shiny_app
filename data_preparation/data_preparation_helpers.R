@@ -3,8 +3,9 @@ library(geosphere)
 library(purrr)
 
 # Constants
+FILE_PATH_FEATHER = '../data/ships.feather'
 DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
-FILE_PATH_FEATHER = './ships.feather'
+
 
 load_data_feather <- function() {
   return(feather::read_feather(FILE_PATH_FEATHER))
